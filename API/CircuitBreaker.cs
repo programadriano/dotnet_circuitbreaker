@@ -20,8 +20,9 @@ namespace API
 
             return Policy
                 .Handle<Exception>()
-                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(10),
-                    onBreak: (_, _) =>
+                 //.CircuitBreakerAsync(5, TimeSpan.FromSeconds(10),
+                 .AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30),
+               onBreak: (_, _) =>
                     {
                         //ShowCircuitState("Open (onBreak)", ConsoleColor.Red);
                     },

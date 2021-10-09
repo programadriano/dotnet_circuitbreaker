@@ -73,7 +73,17 @@ namespace API.Services
 
             if (_circuitBreaker.CircuitState == CircuitState.Open)
             {
-                return IsOpen();
+                var rng = new Random();
+                var wetherForecast = new WeatherForecast
+                {
+                    Date = DateTime.Now,
+                    Summary = "Freezing - Cache",
+                    TemperatureC = rng.Next(-20, 55)
+                };
+
+                result.Add(wetherForecast);
+
+                return result;
             }
 
             return result;
@@ -98,7 +108,7 @@ namespace API.Services
             var wetherForecast = new WeatherForecast
             {
                 Date = DateTime.Now,
-                Summary = "Freezing - Cache",
+                Summary = "Freezing - OPEN",
                 TemperatureC = rng.Next(-20, 55)
             };
 
