@@ -36,6 +36,12 @@ namespace API.Controllers
             return Ok(await _testClient.GetWeather());
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            return Ok(await _testClient.GetWeather2());
+        }
+
 
     }
 }

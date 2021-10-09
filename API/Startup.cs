@@ -38,7 +38,7 @@ namespace API
 
             services.AddHttpClient<TestClientService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost:55000/WeatherForecast");
+                client.BaseAddress = new Uri("http://localhost:55000/");
             });
 
             services.AddSingleton(CircuitBreaker.CreatePolicy());

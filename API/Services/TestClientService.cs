@@ -21,6 +21,35 @@ namespace API.Services
 
         }
 
+        public async Task<string> GetWeather2()
+        {
+            var result = "";
+
+
+            if (_circuitBreaker.CircuitState == CircuitState.Closed || _circuitBreaker.CircuitState == CircuitState.HalfOpen)
+            {
+                try
+                {
+                    result = await _circuitBreaker.ExecuteAsync(() =>
+                    {
+                        return IsClosed2();
+                    });
+                }
+                catch (Exception)
+                {
+
+                    return "hey hey rock n roll";
+                }
+            }
+
+            if (_circuitBreaker.CircuitState == CircuitState.Open)
+            {
+                return "hey hey rock n roll";
+            }
+
+            return result;
+        }
+
         public async Task<List<WeatherForecast>> GetWeather()
         {
             var result = new List<WeatherForecast>();
@@ -32,7 +61,7 @@ namespace API.Services
                 {
                     result = await _circuitBreaker.ExecuteAsync(() =>
                     {
-                       return IsClosed();
+                        return IsClosed();
                     });
                 }
                 catch (Exception)
@@ -48,6 +77,11 @@ namespace API.Services
             }
 
             return result;
+        }
+
+        public async Task<string> IsClosed2()
+        {
+            return await _httpClient.GetStringAsync("api/values/1");
         }
 
 
