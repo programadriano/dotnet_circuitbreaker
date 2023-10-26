@@ -11,30 +11,24 @@ namespace API
 {
     public class CircuitBreaker
     {
-        public static AsyncCircuitBreakerPolicy CreatePolicy()
-        {
-            //return Policy
-            // .Handle<Exception>()
-            //.AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30));
-
-
-            return Policy
-                .Handle<Exception>()
-                 //.CircuitBreakerAsync(5, TimeSpan.FromSeconds(10),
-                 .AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30),
-               onBreak: (_, _) =>
-                    {
-                        //ShowCircuitState("Open (onBreak)", ConsoleColor.Red);
-                    },
-                    onReset: () =>
-                    {
-                        // ShowCircuitState("Closed (onReset)", ConsoleColor.Green);
-                    },
-                    onHalfOpen: () =>
-                    {
-                        //  ShowCircuitState("Half Open (onHalfOpen)", ConsoleColor.Yellow);
-                    });
-        }
+         public static AsyncCircuitBreakerPolicy CreatePolicy()
+    {
+        return Policy
+            .Handle<Exception>()
+            .AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30),
+                onBreak: (_, _) =>
+                {
+                    // Implementação do onBreak
+                },
+                onReset: () =>
+                {
+                    // Implementação do onReset
+                },
+                onHalfOpen: () =>
+                {
+                    // Implementação do onHalfOpen
+                });
+    }
 
 
         public static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
